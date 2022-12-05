@@ -158,9 +158,9 @@ const addEmployee = () => {
         let {name, id, email, title, github, school, confirmEmployee } = employeeInput;
         let employee;
 
-        if (role === 'Engineer') {
+        if (title === 'Engineer') {
             employee = new Engineer (name, id, email, github);
-        } else if (role === 'Intern') {
+        } else if (title === 'Intern') {
             employee = new Intern (name, id, email, school);
         }
 
