@@ -87,7 +87,7 @@ const addEmployee = () => {
         {
             type: 'input',
             name: 'name',
-            message: 'What is the name of this employee?'
+            message: 'What is the name of this employee?',
             validate: userInput => {
                 if (userInput) {
                     return true;
