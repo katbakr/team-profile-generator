@@ -1,7 +1,7 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
 
-//array to hold team member profiles
+//array to hold team member profiles============================================================================================================
 const team = [];
 
 const addManager = () => {
@@ -54,18 +54,18 @@ const addManager = () => {
                 }
             }
         },
-        {
-            type:'', 
-            name: '',
-            message: '',
-            validate: userInput => {
-                if (userInput) {
-                    return true;
-                } else {
-                    console.log('');
-                }
-            }
-        },
+        // {
+        //     type:'', 
+        //     name: '',
+        //     message: '',
+        //     validate: userInput => {
+        //         if (userInput) {
+        //             return true;
+        //         } else {
+        //             console.log('');
+        //         }
+        //     }
+        // },
     ])
     .then (managerInput => {
         const {name, id, email, office} = managerInput;
@@ -172,4 +172,21 @@ const addEmployee = () => {
             return team;
         }
     })
-}
+};
+
+const writeFile = data => {
+    fs.writeFile('./dist/index.html', data, err => {
+        if (err) {
+            console.log(err);
+            return;
+        } else {
+            console.log('Your team is completed! See index.html to see your new webpage.')
+        }
+    })
+};
+
+addManager();
+.then(addEmployee)
+.then(team => {
+    return 
+})
