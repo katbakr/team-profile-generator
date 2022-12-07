@@ -1,9 +1,16 @@
+const generateHTML = require('./src/templateHTML')
+
+const Manager = require('./lib/manager');
+const Engineer = require('./lib/engineer');
+const Intern = require('./lib/intern');
+
 const inquirer = require("inquirer");
 const fs = require("fs");
 
 //array to hold team member profiles============================================================================================================
 const team = [];
 
+//inquirer for manager==========================================================================================================================
 const addManager = () => {
     return inquirer.prompt([
         {
@@ -53,7 +60,7 @@ const addManager = () => {
                     console.log('Please enter the manger office number!');
                 }
             }
-        },
+        }
         // {
         //     type:'', 
         //     name: '',
@@ -67,21 +74,23 @@ const addManager = () => {
         //     }
         // },
     ])
+    //takes data to make new manager and adds manager to team array==============================================================================
     .then (managerInput => {
         const {name, id, email, office} = managerInput;
-        const manager = new manager (name, id, email, office);
+        const manager = new Manager (name, id, email, office);
 
         team.push(manager);
+        console.log(manager);
     })
 };
-
+// inquirer questions for adding employee=======================================================================================================
 const addEmployee = () => {
     console.log('Add your first employee!')
     return inquirer.prompt ([
         {
             type: 'list',
-            name: 'title',
-            message: 'Choose the title of your employee: ',
+            name: 'role',
+            message: 'Choose the role of your employee: ',
             choices: ['Engineer', 'Intern'],
         },
         {
@@ -155,17 +164,17 @@ const addEmployee = () => {
         },
     ])
     .then(employeeInput => {
-        let {name, id, email, title, github, school, confirmEmployee } = employeeInput;
+        let {name, id, email, role, github, school, confirmEmployee } = employeeInput;
         let employee;
 
-        if (title === 'Engineer') {
+        if (role === 'Engineer') {
             employee = new Engineer (name, id, email, github);
-        } else if (title === 'Intern') {
+        } else if (role === 'Intern') {
             employee = new Intern (name, id, email, school);
         }
 
         team.push(employee);
-
+// confirms adding another employee
         if (confirmEmployee) {
             return addEmployee(team);
         } else {
@@ -185,8 +194,14 @@ const writeFile = data => {
     })
 };
 
-addManager();
+addManager()
 .then(addEmployee)
 .then(team => {
-    return 
+    return generateHTML(team)
 })
+.then(write => {
+    return writeFile(write);
+ })
+.catch(err => {
+    console.log(err);
+});

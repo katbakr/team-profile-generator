@@ -26,7 +26,7 @@ const templateEngineer = function (engineer) {
 `
 }
 
-const templateIntern= function (intern) {
+const templateIntern = function (intern) {
     return `
     <div class="card" style="width: 18rem;">
     <div class="card-body">
@@ -46,34 +46,34 @@ generateHTML = (data) => {
 
     for (let i = 0; i < data.length; i++) {
         const employee = data[i];
-        const title = employee.getTitle
+        const role = employee.getRole
+
+
+
+        if (role === 'manager') {
+            const managerData = templateManager(employee)
+            employeeArray.push(managerData);
+        }
+
+        if (role === 'engineer') {
+            const engineerData = templateengineer(employee)
+            employeeArray.push(engineerData);
+        }
+
+        if (role === 'intern') {
+            const internData = templateintern(employee)
+            employeeArray.push(internData);
+        }
     }
 
+    const employeeData = employeeArray.join('')
 
-    if (title === 'manager') {
-        const managerData = templateManager(employee)
-        employeeArray.push(managerData);
-    }
-
-    if (title === 'engineer') {
-        const engineerData = templateengineer(employee)
-        employeeArray.push(engineerData);
-    }
-
-    if (title === 'intern') {
-        const internData = templateintern(employee)
-        employeeArray.push(internData);
-    }
-
-
-const employeeData = employeeArray.join('')
-
-const generateTeam = templateTeamPage(employeeData);
-return generateTeam;
+    const generateTeam = templateTeamPage(employeeData);
+    return generateTeam;
 }
 
-const templateTeamPage = function(employeeData){
-    return` 
+const templateTeamPage = function (employeeData) {
+    return ` 
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -94,5 +94,7 @@ ${employeeData}
 
     </body>
     </html> 
-    `
+    `;
 }
+
+module.exports = generateHTML;
