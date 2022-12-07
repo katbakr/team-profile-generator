@@ -1,5 +1,5 @@
 const templateManager = function (manager) {
-    return `
+  return `
     <div class="card" style="width: 18rem;">
     <div class="card-body">
       <h5 class="card-title">Manager</h5>
@@ -9,11 +9,11 @@ const templateManager = function (manager) {
       <p class="office">Office Number: ${manager.office}</p>
     </div>
   </div> 
-  `
-}
+  `;
+};
 
 const templateEngineer = function (engineer) {
-    return `
+  return `
     <div class="card" style="width: 18rem;">
     <div class="card-body">
       <h5 class="card-title">Engineer</h5>
@@ -23,11 +23,11 @@ const templateEngineer = function (engineer) {
       <p class="github">GitHub: ${engineer.github}</p>
     </div>
   </div>     
-`
-}
+`;
+};
 
 const templateIntern = function (intern) {
-    return `
+  return `
     <div class="card" style="width: 18rem;">
     <div class="card-body">
       <h5 class="card-title">Intern</h5>
@@ -37,50 +37,47 @@ const templateIntern = function (intern) {
       <p class="school">School: ${intern.school}</p>
     </div>
   </div>     
-`
-}
+`;
+};
 
 generateHTML = (data) => {
+  employeeArray = [];
 
-    employeeArray = [];
+  for (let i = 0; i < data.length; i++) {
+    const employee = data[i];
+    const role = employee.getRole;
 
-    for (let i = 0; i < data.length; i++) {
-        const employee = data[i];
-        const role = employee.getRole
-
-
-
-        if (role === 'manager') {
-            const managerData = templateManager(employee)
-            employeeArray.push(managerData);
-        }
-
-        if (role === 'engineer') {
-            const engineerData = templateengineer(employee)
-            employeeArray.push(engineerData);
-        }
-
-        if (role === 'intern') {
-            const internData = templateintern(employee)
-            employeeArray.push(internData);
-        }
+    if (role === "manager") {
+      const managerData = templateManager(employee);
+      employeeArray.push(managerData);
     }
 
-    const employeeData = employeeArray.join('')
+    if (role === "engineer") {
+      const engineerData = templateEngineer(employee);
+      employeeArray.push(engineerData);
+    }
 
-    const generateTeam = templateTeamPage(employeeData);
-    return generateTeam;
-}
+    if (role === "intern") {
+      const internData = templateIntern(employee);
+      employeeArray.push(internData);
+    }
+  }
 
-const templateTeamPage = function (employeeData) {
-    return ` 
+  const employeeData = employeeArray.join("");
+
+  const generateTeam = templateTeamPage(employeeData);
+  return generateTeam;
+};
+
+const templateTeamPage = function(employeeData) {
+  return ` 
     <!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>Team Roster</title>
     </head>
     <body>
     <header>
@@ -88,13 +85,15 @@ const templateTeamPage = function (employeeData) {
         <span class="navbar-brand mb-0 h1">My Team</span>
       </nav>
    </header> 
-<div class="cards">
-${employeeData}
-</div>
-
+        <main>
+            <div class="cards">
+                ${employeeData}
+            </div>
+        </main>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     </body>
     </html> 
     `;
-}
+};
 
 module.exports = generateHTML;
